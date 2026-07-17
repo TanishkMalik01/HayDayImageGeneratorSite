@@ -56,6 +56,9 @@ let shouldHidePriceOrMultiplier;
 let defaultQuantity, defaultPriceOrMultiplier;
 let shouldRefocusNameOnSubmit, shouldFocusQuantityOnAutocomplete, shouldIgnoreLocale;
 
+let sellAtMaxPriceCheckBox;
+let shouldSellAtMaxPrice = false;
+
 let itemNameFuzzyMatchesHolder, priceCalculationItemFuzzyMatchesHolder;
 
 
@@ -130,6 +133,7 @@ $(document).ready(() =>
     refocusNameOnSubmitCheckBox = $("#refocusNameOnSubmitCheckBox");
     focusQuantityOnAutocompleteCheckBox = $("#focusQuantityOnAutocompleteCheckBox");
     ignoreLocaleCheckBox = $("#ignoreLocaleCheckBox");
+    sellAtMaxPriceCheckBox = $("#sellAtMaxPriceCheckBox");
     // reduceAnimationsCheckBox = $("#reduceAnimationsCheckBox");
 
 
@@ -489,6 +493,14 @@ $(document).ready(() =>
     showTotalInNormalModeCheckBox.on("click", () =>
     {
         shouldShowTotalInNormalMode = !shouldShowTotalInNormalMode;
+
+        updateTotalPrice();
+        saveAllToLocalStorage();
+    });
+
+    sellAtMaxPriceCheckBox.on("click", () =>
+    {
+        shouldSellAtMaxPrice = !shouldSellAtMaxPrice;
 
         updateTotalPrice();
         saveAllToLocalStorage();
@@ -942,6 +954,10 @@ class Item
             price = `${maxPrice}*(${mult})`;
         // I'm doing this so that it can be shown to the user in full
         price = `${quantity}*(${price})`;
+
+        if (typeof shouldSellAtMaxPrice !== 'undefined' && shouldSellAtMaxPrice) {
+            price = `(${price}) - (${quantity}*${maxPrice})`;
+        }
 
         try
         {
@@ -2119,6 +2135,10 @@ function loadAllFromLocalStorage()
     const sIgnoreLocale = (localStorage.getItem("ignoreLocale") ?? "false") === "true"; // default to false
     shouldIgnoreLocale = sIgnoreLocale;
     ignoreLocaleCheckBox.prop("checked", sIgnoreLocale);
+
+    const sSellAtMaxPrice = (localStorage.getItem("sellAtMaxPrice") ?? "false") === "true"; // default to false
+    shouldSellAtMaxPrice = sSellAtMaxPrice;
+    sellAtMaxPriceCheckBox.prop("checked", sSellAtMaxPrice);
 }
 
 function saveAllToLocalStorage()
@@ -2152,6 +2172,7 @@ function saveAllToLocalStorage()
     localStorage.setItem("refocusNameOnSubmit", shouldRefocusNameOnSubmit);
     localStorage.setItem("focusQuantityOnAutocomplete", shouldFocusQuantityOnAutocomplete);
     localStorage.setItem("ignoreLocale", shouldIgnoreLocale);
+    localStorage.setItem("sellAtMaxPrice", shouldSellAtMaxPrice);
 }
 
 function saveItemsToLocalStorage()

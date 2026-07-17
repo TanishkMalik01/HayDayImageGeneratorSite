@@ -21,6 +21,9 @@ let shouldHidePriceOrMultiplier;
 let defaultQuantity, defaultPriceOrMultiplier;
 let shouldRefocusNameOnSubmit, shouldFocusQuantityOnAutocomplete, shouldIgnoreLocale;
 
+let sellAtMaxPriceCheckBox;
+let shouldSellAtMaxPrice = false;
+
 let itemNameFuzzyMatchesHolder, priceCalculationItemFuzzyMatchesHolder;
 
 

@@ -107,6 +107,10 @@ function loadAllFromLocalStorage()
     const sIgnoreLocale = (localStorage.getItem("ignoreLocale") ?? "false") === "true"; // default to false
     shouldIgnoreLocale = sIgnoreLocale;
     ignoreLocaleCheckBox.prop("checked", sIgnoreLocale);
+
+    const sSellAtMaxPrice = (localStorage.getItem("sellAtMaxPrice") ?? "false") === "true"; // default to false
+    shouldSellAtMaxPrice = sSellAtMaxPrice;
+    sellAtMaxPriceCheckBox.prop("checked", sSellAtMaxPrice);
 }
 
 function saveAllToLocalStorage()
@@ -140,6 +144,7 @@ function saveAllToLocalStorage()
     localStorage.setItem("refocusNameOnSubmit", shouldRefocusNameOnSubmit);
     localStorage.setItem("focusQuantityOnAutocomplete", shouldFocusQuantityOnAutocomplete);
     localStorage.setItem("ignoreLocale", shouldIgnoreLocale);
+    localStorage.setItem("sellAtMaxPrice", shouldSellAtMaxPrice);
 }
 
 function saveItemsToLocalStorage()

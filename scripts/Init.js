@@ -41,6 +41,7 @@ $(document).ready(() =>
     refocusNameOnSubmitCheckBox = $("#refocusNameOnSubmitCheckBox");
     focusQuantityOnAutocompleteCheckBox = $("#focusQuantityOnAutocompleteCheckBox");
     ignoreLocaleCheckBox = $("#ignoreLocaleCheckBox");
+    sellAtMaxPriceCheckBox = $("#sellAtMaxPriceCheckBox");
     // reduceAnimationsCheckBox = $("#reduceAnimationsCheckBox");
 
 
@@ -400,6 +401,14 @@ $(document).ready(() =>
     showTotalInNormalModeCheckBox.on("click", () =>
     {
         shouldShowTotalInNormalMode = !shouldShowTotalInNormalMode;
+
+        updateTotalPrice();
+        saveAllToLocalStorage();
+    });
+
+    sellAtMaxPriceCheckBox.on("click", () =>
+    {
+        shouldSellAtMaxPrice = !shouldSellAtMaxPrice;
 
         updateTotalPrice();
         saveAllToLocalStorage();
